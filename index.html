@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head></head>
+
+<body>
+    <h1 id="length"></h1>
+    <input type="text" placeholder="What to add (name)?" id="add" class="add">
+    <input type="text" placeholder="What to add (value)?" id="addValue" class="add">
+
+    <p></p>
+    <input type="text" placeholder="What to read?" id="read" class="read">
+    <p></p>
+    <input type="text" placeholder="What to delete?" id="delete" class="delete">
+    <p></p>
+
+    <button onclick="load();" class="loadBtn">Load.</button>
+    <button onclick="clearStorage();" class="clsBtn">Clear.</button>
+    <h2 id="text"></h2>
+</body>
+<script>
+    document.getElementById("length").innerHTML = "ObjectCount: " + localStorage.length;
+    function load() {
+        
+        var add = document.getElementById("add").value;
+        var addV = document.getElementById("addValue").value;
+        if (add == "") {
+            console.log("AddVal: null")
+        }
+        else {
+            var setItem = localStorage.setItem(add, addV);
+            document.getElementById("text").innerHTML = "New Object: " + add + ": " + addV;
+            updateCount();
+            document.getElementById("add").value = "";
+            document.getElementById("addValue").value = "";
+        }
+        var read = document.getElementById("read").value;
+        if (read == "") {
+            console.log("Read: null");
+        }
+        else {
+            var readItem = localStorage.getItem(read);
+            var readP = document.getElementById("text").innerHTML = "Read: " + read + ": " + readItem;
+            updateCount();
+            document.getElementById("read").value = "";
+        }
+        var del = document.getElementById("delete").value;
+        if (del == "") {
+            console.log("Delete: null");
+        }
+        else {
+            var delItem = localStorage.removeItem(del);
+            document.getElementById("text").innerHTML = "Deleted Item: " + del; 
+            updateCount();
+            document.getElementById("delete").value = "";
+        }
+        
+        
+        
+    }
+    function clearStorage() {
+        var con = confirm("Are you sure you want to continue? (OBS! This will delete all localStorage permanently.)")
+        if (con == true) {
+            localStorage.clear();
+            updateCount();
+            updateAllText();
+        }
+    }
+    function updateCount() {
+        document.getElementById("length").innerHTML = "ObjectCount: " + localStorage.length;
+    }
+    function updateAllText() {
+       document.getElementById("text").innerHTML  = "Cleared."
+    }
+</script>
+<style>
+    .loadBtn {
+        width: 100px;
+        height: 50px;
+    }
+    .clsBtn {
+        width: 100px;
+        height: 50px;
+    }
+</style>
